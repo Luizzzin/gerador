@@ -1,5 +1,6 @@
 {
   "expo": {
+    "lan":"10.136.23.57:8082",
     "name": "gerador",
     "slug": "gerador",
     "version": "1.0.0",

@@ -1,13 +1,23 @@
-import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, Image, TouchableOpacity, Modal } from "react-native";
+import { ModalTokens } from '../components/modal';
 import Slider from "@react-native-community/slider";
+import { useState } from "react";
 
 
 export function Home() {
+    const [qtde, defineQtde] = useState(6);
+    const [telaModal, configTelaModal]=useState(false);
+
+    function gerarToken() {
+        configTelaModal(true);
+        }
+
     return (
         <View style={ESTILO.container}>
-            <Text>
+
+            <Text style={ESTILO.caracteres}>
                 <Image source={require("../assets/logo.png")} style={ESTILO.logo} />
-                app na web
+                {qtde} Caracteres
             </Text>
             <View style={ESTILO.area}>
                 <Slider style={{ height: 50 }}
@@ -16,20 +26,26 @@ export function Home() {
                     minimumTrackTintColor="#ff0000"
                     maximumTrackTintColor="#000"
                     thumbTintColor="#392de9"
+                    value={qtde}
+                    onValueChange={(value) => defineQtde(value.toFixed(0))}
                 />
             </View>
-            <TouchableOpacity style={ESTILO.button}>
+            <TouchableOpacity style={ESTILO.button} onPress={gerarToken}>
                 <Text style={ESTILO.buttonText}>
                     Gerar Senha
                 </Text>
             </TouchableOpacity>
+            <Modal visible={telaModal} animationType="fade" transparent={true}>
+                
+            <ModalTokens fechar={()=> configTelaModal(false)} />
+            </Modal>
         </View>
     )
 }
 
 const ESTILO = StyleSheet.create({
     container: {
-        flex : 1,
+        flex: 1,
         backgroundColor: "#fff7",
         justifyContent: 'center',
         alignItems: 'center'
@@ -59,5 +75,9 @@ const ESTILO = StyleSheet.create({
     buttonText: {
         color: "#FFF"
     },
+    caracteres: {
+        fontSize: 30,
+        fontWeight: "bold",
+    }
 
 })
